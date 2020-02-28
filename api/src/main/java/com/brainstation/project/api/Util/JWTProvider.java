@@ -8,8 +8,7 @@ import java.util.Date;
 
 public class JWTProvider {
 
-    public static String createJWT(String id, String name, String username, String subject, long ttlMillis) {
-
+    public static String createJWT(String id, String name, String username, String subject) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         // Let's set the JWT Claims
@@ -17,11 +16,6 @@ public class JWTProvider {
         try {
             builder = Jwts.builder().setId(id).setSubject(subject).setIssuedAt(now).claim("username", username)
                     .claim("name", name).signWith(SignatureAlgorithm.HS256, "secret".getBytes("UTF-8"));
-            if (ttlMillis >= 0) {
-                long expMillis = nowMillis + ttlMillis;
-                Date exp = new Date(expMillis);
-                builder.setExpiration(exp);
-            }
             String compact = builder.compact();
             return compact;
         } catch (UnsupportedEncodingException e) {

@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user) {
-        userService.insertUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        return new ResponseEntity<>(userService.insertUser(user) , HttpStatus.OK);
     }
 
     @GetMapping
@@ -56,11 +56,5 @@ public class UserController {
     public void updateUser(@PathVariable("id") long id, @RequestBody User user) {
         userService.updateUser(id, user);
     }
-
-    /*@DeleteMapping("{username}")
-    public void deleteUser(@PathVariable("username") String username) {
-        userService.deleteUser(username);
-    }*/
-
 
 }
